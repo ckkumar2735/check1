@@ -9,16 +9,16 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="g_sec1.css">
-  <link rel="stylesheet" href="g_sec2.css">
-  <link rel="stylesheet" href="g_sec3.css">
-  <link rel="stylesheet" href="g_sec4.css">
-  <link rel="stylesheet" href="g_sec5.css">
-  <link rel="stylesheet" href="g_sec6.css">
-  <link rel="stylesheet" href="g_sec7.css">
+  <link rel="stylesheet" href="./Styles/Industries/g_sec1.css">
+  <link rel="stylesheet" href="./Styles/Industries/g_sec2.css">
+  <link rel="stylesheet" href="./Styles/Industries/g_sec3.css">
+  <link rel="stylesheet" href="./Styles/Industries/g_sec4.css">
+  <link rel="stylesheet" href="./Styles/Industries/g_sec5.css">
+  <link rel="stylesheet" href="Styles/Industries/g_sec6.css">
+  <link rel="stylesheet" href="./Styles/Industries/g_sec7.css">
   <!-- <link rel="stylesheet" href="path/to/flickity.css" /> -->
-  <link rel="stylesheet" href="carousel1.css">
-  <link rel="stylesheet" href="Accordian.css">
+  <link rel="stylesheet" href="./Styles/Industries/carousel1.css">
+  <link rel="stylesheet" href="./Styles/Industries/Accordian.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
   <link rel="stylesheet"
@@ -105,12 +105,25 @@
       <div class="row">
 
         <div class="main_content_div text_center">
-          <div class="g-center" style="position: relative; z-index: 1;"> <p class="hero"><span class="eyebrow__flashing-dot ">🔴</span> &nbsp; BREAKING NEWS :
-             <span class="ck_indus_city"> </span>&nbsp;  #1 FASTEST GROWING AGENCY REVELED FOR REAL ESTATE</p>
+          <div class="g-center mx-auto" style="position: relative; z-index: 1;">
+            <p class="">
+            <div class="d-flex hero">
+              <div>
+                <span class="eyebrow__flashing-dot ">🔴</span>
+
+              </div>
+              <div>
+                &nbsp; BREAKING NEWS :
+                <!-- <span class="ck_indus_city"> </span> -->
+                <span id="liveCity">Fetching...</span>
+                &nbsp; #1 FASTEST GROWING AGENCY REVELED FOR REAL ESTATE
+              </div>
+            </div>
+            </p>
             <!-- <div class="g-center" style="position: relative; z-index: 1;">
             <p class="hero"><span class="eyebrow__flashing-dot">🔴</span> BRAKING NEWS : Muzaffarpur’S FASTEST GROWING
               ...</p> -->
-              <!-- <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div> -->
+            <!-- <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div> -->
           </div>
           <div class="text_center" style="position: relative;">
             <div class="top_left_line" style="position: absolute;   transform: translateY(-50%);">
@@ -127,10 +140,43 @@
     </div>
   </section>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
   <script>
+    // Function to get the current city using geolocation and OpenCage Geocoding API
+    function getCurrentCity() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+
+                // Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
+                var apiKey = '9ce1eda527e2427cab59168d6b93eecd';
+                var apiUrl = `https://api.opencagedata.com/geocode/v1/json?key=${apiKey}&q=${latitude}+${longitude}&pretty=1`;
+
+                // Fetch city information from OpenCage Geocoding API
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        var cityName = data.results[0].components.city;
+                        document.getElementById("liveCity").innerHTML = cityName;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching city:', error);
+                        document.getElementById("liveCity").innerHTML = "Error fetching city";
+                    });
+            });
+        } else {
+            document.getElementById("liveCity").innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    // Call the function to get the current city
+    getCurrentCity();
+</script>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+
+
+  <!-- <script>
     const getLocation = () => {
       if (navigator.permissions) {
         navigator.permissions.query({ name: 'geolocation' }).then((result) => {
@@ -184,7 +230,7 @@
 
     // Call the getLocation function when the page loads
     getLocation();
-  </script>
+  </script> -->
 
 
 
@@ -361,6 +407,7 @@
 
             </div>
           </div>
+
         </div>
         <div class="Enq-btn text-center">
           <a href="https://wa.me/+916205104602?text=My+Test+Text!"><button class="ind_btn1">Enquiry Now</button></a>
