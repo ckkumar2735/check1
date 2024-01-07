@@ -140,7 +140,7 @@
     </div>
   </section>
 
- <script>
+<script>
     // Function to get the current city using geolocation and OpenCage Geocoding API
     function getCurrentCity() {
         if (navigator.geolocation) {
@@ -161,8 +161,15 @@
                         // Check if the city component is available in the response
                         if (data.results && data.results.length > 0 && data.results[0].components.city) {
                             var cityName = data.results[0].components.city;
+                            
                             document.getElementById("liveCity").innerHTML = cityName;
-                        } else {
+                        } 
+                        else if (data.results && data.results.length > 0 && data.results[0].components.state_district){
+                          var state_districtName =data.results[0].components.state_district;
+
+                          document.getElementById("liveCity").innerHTML = state_districtName;
+                        }
+                          else {
                             console.error('City not found in the API response.');
                             document.getElementById("liveCity").innerHTML = "City not found";
                         }
